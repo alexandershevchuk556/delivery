@@ -17,7 +17,6 @@ class Delivery extends Controller
         ]);
 
         $results = (new DeliveryService)->countDeliveryPriceForAllCompanies($request);
-        // $results = [['type' => $request->option]];
 
         return view('home', compact('results'));
     }
