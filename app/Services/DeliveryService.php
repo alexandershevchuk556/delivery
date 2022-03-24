@@ -24,7 +24,12 @@ class DeliveryService
         $hornsAndHoovesCompany->minimalSlowPrice = 200;
         $hornsAndHoovesCompany->companyName = 'Horns And Hooves';
 
-        $companies = [$russianDeliveryCompany, $hornsAndHoovesCompany];
+        $x = new Company();
+        $x->coefficient = 300;
+        $x->minimalSlowPrice = 300;
+        $x->companyName = 'Posil&Ka';
+
+        $companies = [$russianDeliveryCompany, $hornsAndHoovesCompany, $x];
 
         $res = [];
 
@@ -34,17 +39,19 @@ class DeliveryService
                     $res[$cp->companyName] = [
                         'price' => $cp->coefficient * $request->weight,
                         'date' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 2 days')),
-                        'error' => '200'
+                        'error' => '200',
                     ];
                 }
+            break;
             case 'slow':
                 foreach ($companies as $cp) {
                     $res[$cp->companyName] = [
                         'price' => $cp->coefficient * $request->weight + $cp->minimalSlowPrice,
-                        'date' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 5 days')),
-                        'error' => '200'
+                        'date' => date('Y-m-d', strtotime(date('Y-m-d') . '+ 10 days')),
+                        'error' => '200',
                     ];
                 }
+            break;
         }
 
         return $res;
